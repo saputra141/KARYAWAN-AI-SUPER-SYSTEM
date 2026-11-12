@@ -1,0 +1,17 @@
+{
+  "name": "Karyawan AI Super System",
+  "short_name": "Karyawan AI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "description": "Workspace AI untuk konten, sales, analisis dan automasi bisnis",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
