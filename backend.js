@@ -2,9 +2,7 @@
 const SUPABASE_URL = "https://abdjvqrzqvkbnbuoczmh.supabase.co";
 const SUPABASE_KEY = "TEMPEL_PUBLISHABLE_KEY_KAMU";
 
-const { createClient } = supabase;
-
-const db = createClient(
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
@@ -42,35 +40,42 @@ window.logoutUser = async () => {
   if (error) throw error;
 };
 
+// USER
+window.getCurrentUser = async () => {
+  const { data, error } = await db.auth.getUser();
+  if (error) throw error;
+  return data.user;
+};
+
 // PROFILE
 window.getProfile = async () => {
-  const { data: { user } } = await db.auth.getUser();
-
+  const user = await window.getCurrentUser();
   if (!user) return null;
 
   const { data, error } = await db
     .from("profiles")
     .select("*")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
   return data;
 };
 
-// CHECK PRO
+// CEK PRO
 window.checkPro = async () => {
   const { data, error } = await db.rpc("is_pro");
-
   if (error) throw error;
   return data === true;
 };
 
 // PEMBAYARAN PRO
 window.createProPayment = async () => {
-  const { data: { user } } = await db.auth.getUser();
+  const user = await window.getCurrentUser();
 
-  if (!user) throw new Error("Silakan login terlebih dahulu.");
+  if (!user) {
+    throw new Error("Silakan login terlebih dahulu.");
+  }
 
   const { data, error } = await db
     .from("payments")
@@ -98,7 +103,7 @@ window.createProPayment = async () => {
   return data;
 };
 
-// ADMIN AKTIVASI
+// AKTIVASI PRO ADMIN
 window.activatePro = async (paymentId) => {
   const { data, error } = await db.rpc(
     "admin_activate_pro",
@@ -107,4 +112,24 @@ window.activatePro = async (paymentId) => {
 
   if (error) throw error;
   return data;
+};
+
+// AI GEMINI VIA SUPABASE EDGE FUNCTION
+window.askKaryawanAI = async (type, prompt) => {
+  const { data, error } = await db.functions.invoke(
+    "karyawan-ai",
+    {
+      body: {
+        type,
+        prompt
+      }
+    }
+  );
+
+  if (error) throw error;
+  if (!data || !data.success) {
+    throw new Error(data?.error || "AI gagal memberikan jawaban.");
+  }
+
+  return data.result;
 };
