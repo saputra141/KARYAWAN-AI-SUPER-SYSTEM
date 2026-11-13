@@ -1,27 +1,255 @@
+
 <!doctype html>
-<html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07111f"><meta name="description" content="Karyawan AI Super System — ruang kerja AI untuk bisnis">
-<link rel="manifest" href="manifest.json"><link rel="icon" href="icons/icon.svg"><title>Karyawan AI — Super System</title><link rel="stylesheet" href="style.css">
-</head><body>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="Karyawan AI Super System — ruang kerja AI untuk bisnis">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg">
+<title>Karyawan AI — Super System</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* UPGRADE PRO */
+.pro-nav {
+  margin: 12px 10px 18px;
+}
+.pro-nav-link {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#f5f8ff;
+  background:linear-gradient(135deg,#172b48,#102039);
+  border:1px solid rgba(95,165,255,.25);
+  transition:all .25s ease;
+}
+.pro-nav-link:hover {
+  transform:translateY(-2px);
+  border-color:#60a5fa;
+  box-shadow:0 8px 24px rgba(37,99,235,.18);
+}
+.pro-crown {
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);
+  color:#111827;
+  font-size:19px;
+}
+.pro-nav-text {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.pro-nav-text strong {font-size:13px}
+.pro-nav-text small {font-size:11px;color:#9fb4d2}
+.pro-price {
+  font-size:11px;
+  font-weight:800;
+  color:#fcd34d;
+  white-space:nowrap;
+}
+.account-plan {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0 10px 12px;
+  padding:9px 11px;
+  border-radius:10px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.07);
+  font-size:12px;
+}
+.plan-dot {
+  width:7px;height:7px;border-radius:50%;
+  background:#94a3b8;
+}
+.plan-label {color:#aabbd2}
+.plan-value {margin-left:auto;font-weight:700;color:#cbd5e1}
+</style>
+</head>
+
+<body>
 <div class="app-shell">
+
 <aside class="sidebar" id="sidebar">
- <a class="brand" href="#" onclick="navigate('overview');return false"><span class="brand-mark">✦</span><span><b>KARYAWAN AI</b><small>SUPER SYSTEM</small></span></a>
- <div class="workspace"><span class="workspace-dot"></span><span><b>Workspace utama</b><small>Personal workspace</small></span><span class="chevron">⌄</span></div>
- <div class="nav-label">WORKSPACE</div><nav class="nav">
- <button class="nav-item active" data-page="overview"><span class="nav-icon">▦</span>Overview</button>
- <button class="nav-item" data-page="manager"><span class="nav-icon">✧</span>AI Manager<span class="nav-pill">AI</span></button>
- <button class="nav-item" data-page="content"><span class="nav-icon">▤</span>Content Studio</button>
- <button class="nav-item" data-page="sales"><span class="nav-icon">◉</span>Sales Assistant</button>
- <button class="nav-item" data-page="analytics"><span class="nav-icon">⌁</span>Analytics</button>
- <button class="nav-item" data-page="automation"><span class="nav-icon">⟳</span>Automation</button>
- </nav>
- <div class="nav-label">PREFERENSI</div><nav class="nav"><button class="nav-item" data-page="history"><span class="nav-icon">◷</span>Riwayat kerja</button><button class="nav-item" data-page="settings"><span class="nav-icon">⚙</span>Pengaturan</button></nav>
- <div class="sidebar-bottom"><div class="status-card"><span class="pulse"></span><div><b>Workspace aktif</b><small>Mode lokal · aman</small></div></div><div class="user-card"><div class="user-avatar">B</div><div><b>Business Owner</b><small>Administrator</small></div><span class="more">•••</span></div></div>
+
+<a class="brand" href="#" onclick="navigate('overview');return false">
+<span class="brand-mark">✦</span>
+<span>
+<b>KARYAWAN AI</b>
+<small>SUPER SYSTEM</small>
+</span>
+</a>
+
+<div class="workspace">
+<span class="workspace-dot"></span>
+<span>
+<b>Workspace utama</b>
+<small>Personal workspace</small>
+</span>
+<span class="chevron">⌄</span>
+</div>
+
+<div class="nav-label">WORKSPACE</div>
+
+<nav class="nav">
+<button class="nav-item active" data-page="overview">
+<span class="nav-icon">▦</span>Overview
+</button>
+
+<button class="nav-item" data-page="manager">
+<span class="nav-icon">✧</span>AI Manager
+<span class="nav-pill">AI</span>
+</button>
+
+<button class="nav-item" data-page="content">
+<span class="nav-icon">▤</span>Content Studio
+</button>
+
+<button class="nav-item" data-page="sales">
+<span class="nav-icon">◉</span>Sales Assistant
+</button>
+
+<button class="nav-item" data-page="analytics">
+<span class="nav-icon">⌁</span>Analytics
+</button>
+
+<button class="nav-item" data-page="automation">
+<span class="nav-icon">⟳</span>Automation
+</button>
+</nav>
+
+<!-- MENU UPGRADE PRO -->
+<div class="nav-label">AKUN & LANGGANAN</div>
+
+<div class="account-plan">
+<span class="plan-dot"></span>
+<span class="plan-label">Paket akun</span>
+<span class="plan-value" id="accountPlan">FREE</span>
+</div>
+
+<div class="pro-nav">
+<a class="pro-nav-link" href="upgrade.html">
+<span class="pro-crown">♛</span>
+<span class="pro-nav-text">
+<strong>Upgrade PRO</strong>
+<small>Akses premium 7 hari</small>
+</span>
+<span class="pro-price">Rp19K ↗</span>
+</a>
+</div>
+
+<div class="nav-label">PREFERENSI</div>
+
+<nav class="nav">
+<button class="nav-item" data-page="history">
+<span class="nav-icon">◷</span>Riwayat kerja
+</button>
+
+<button class="nav-item" data-page="settings">
+<span class="nav-icon">⚙</span>Pengaturan
+</button>
+</nav>
+
+<div class="sidebar-bottom">
+
+<div class="status-card">
+<span class="pulse"></span>
+<div>
+<b>Workspace aktif</b>
+<small>Mode lokal · aman</small>
+</div>
+</div>
+
+<div class="user-card">
+<div class="user-avatar">B</div>
+<div>
+<b id="userDisplayName">Business Owner</b>
+<small id="userDisplayStatus">Administrator · FREE</small>
+</div>
+<span class="more">•••</span>
+</div>
+
+</div>
 </aside>
+
 <main class="main">
-<header class="topbar"><button class="mobile-menu" onclick="toggleSidebar()">☰</button><div class="breadcrumb"><span>Workspace</span><i>/</i><b id="crumb">Overview</b></div><div class="top-actions"><button class="icon-btn" title="Cari" onclick="focusSearch()">⌕</button><button class="icon-btn" title="Notifikasi" onclick="toast('Belum ada notifikasi baru')">♧<span class="notif-dot"></span></button><div class="top-avatar">B</div></div></header>
-<div class="content-wrap"><div class="page-head"><div><div class="eyebrow"><span class="spark">✦</span> AI BUSINESS WORKSPACE</div><h1 id="page-title">Selamat datang kembali 👋</h1><p id="page-subtitle">Satu ruang kerja untuk ide, konten, pemasaran, dan operasional bisnis.</p></div><div class="head-date" id="today"></div></div>
+
+<header class="topbar">
+<button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+<div class="breadcrumb">
+<span>Workspace</span>
+<i>/</i>
+<b id="crumb">Overview</b>
+</div>
+
+<div class="top-actions">
+<button class="icon-btn" title="Cari" onclick="focusSearch()">⌕</button>
+
+<button class="icon-btn" title="Notifikasi" onclick="toast('Belum ada notifikasi baru')">
+♧<span class="notif-dot"></span>
+</button>
+
+<div class="top-avatar">B</div>
+</div>
+</header>
+
+<div class="content-wrap">
+
+<div class="page-head">
+<div>
+<div class="eyebrow">
+<span class="spark">✦</span>
+AI BUSINESS WORKSPACE
+</div>
+
+<h1 id="page-title">Selamat datang kembali 👋</h1>
+
+<p id="page-subtitle">
+Satu ruang kerja untuk ide, konten, pemasaran, dan operasional bisnis.
+</p>
+</div>
+
+<div class="head-date" id="today"></div>
+</div>
+
 <section id="view" class="view"></section>
-<footer><span>© 2026 Karyawan AI Super System</span><span><span class="footer-dot"></span> Workspace berjalan di perangkat ini</span></footer></div></main></div>
-<div id="toast" class="toast"></div><script src="app.js"></script></body></html>
+
+<footer>
+<span>© 2026 Karyawan AI Super System</span>
+<span><span class="footer-dot"></span> Workspace berjalan di perangkat ini</span>
+</footer>
+
+</div>
+</main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+
+<script>
+/* Informasi akun tampilan saja.
+   Status PRO yang aman harus diverifikasi backend. */
+
+(function(){
+  const plan = document.getElementById("accountPlan");
+  const status = document.getElementById("userDisplayStatus");
+
+  if(plan) plan.textContent = "FREE";
+  if(status) status.textContent = "Administrator · FREE";
+})();
+</script>
+
+</body>
+</html>
