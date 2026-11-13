@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>Upgrade PRO — Karyawan AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#edf6ff;font-family:system-ui,Arial}
+main{max-width:700px;margin:auto;padding:24px 16px}
+.card{background:#102036;border:1px solid #263d57;border-radius:22px;padding:22px;margin:16px 0}
+h1{font-size:32px;margin:10px 0}
+.muted{color:#9bb0c9;line-height:1.6}
+.price{font-size:38px;font-weight:800;color:#45ddff}
+button{width:100%;padding:15px;border:0;border-radius:12px;font-weight:800;font-size:15px;cursor:pointer;margin-top:10px}
+.wa{background:#25d366;color:#052414}
+.secondary{background:#20334b;color:white;border:1px solid #3b536d}
+input,textarea{width:100%;padding:13px;border-radius:10px;background:#071522;border:1px solid #314862;color:white;font:inherit;margin:7px 0 14px}
+label{font-weight:650}
+.tag{display:inline-block;background:#123b4c;color:#7ce8ff;padding:7px 12px;border-radius:20px;font-size:12px}
+</style>
+</head>
+<body>
+<main>
+<div class="tag">KARYAWAN AI SUPER SYSTEM</div>
+<h1>Upgrade ke <span style="color:#45ddff">PRO</span></h1>
+<p class="muted">Nikmati akses premium selama 7 hari.</p>
+
+<section class="card">
+<div class="tag">PAKET PRO • 7 HARI</div>
+<div class="price">Rp19.000</div>
+<p>✓ Akses fitur premium<br>
+✓ Upgrade akun selama 7 hari<br>
+✓ Konfirmasi pembayaran melalui WhatsApp</p>
+
+<button class="wa" onclick="bayarWA()">
+  ☎ BAYAR VIA WHATSAPP
+</button>
+<p class="muted" style="font-size:12px">
+WhatsApp Admin: 6285176769024
+</p>
+</section>
+
+<section class="card">
+<h2>Konfirmasi Pembayaran</h2>
+<p class="muted">Setelah transfer/QRIS, isi informasi berikut untuk menghubungi admin.</p>
+
+<form onsubmit="konfirmasi(event)">
+<label>Email akun</label>
+<input id="email" type="email" required placeholder="Email akun kamu">
+
+<label>Nama pengirim</label>
+<input id="nama" required placeholder="Nama sesuai pembayaran">
+
+<label>Nominal pembayaran</label>
+<input value="Rp19.000" readonly>
+
+<label>Referensi transaksi (opsional)</label>
+<input id="ref" placeholder="Nomor referensi transaksi">
+
+<button class="secondary" type="submit">
+KIRIM KONFIRMASI
+</button>
+</form>
+</section>
+
+<section class="card">
+<h3>Ketentuan PRO</h3>
+<p class="muted">
+Paket PRO berlaku 7 hari setelah pembayaran diverifikasi admin.
+Jangan mengirim PIN, password, atau OTP.
+Pembayaran tidak otomatis terverifikasi melalui halaman ini.
+</p>
+</section>
+</main>
+
+<script>
+const WA="6285176769024";
+
+function bayarWA(){
+ const msg="Halo Admin, saya ingin membeli KARYAWAN AI SUPER SYSTEM PRO 7 hari seharga Rp19.000. Mohon informasi pembayaran.";
+ window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(msg),"_blank");
+}
+
+function konfirmasi(e){
+ e.preventDefault();
+ const email=document.getElementById("email").value;
+ const nama=document.getElementById("nama").value;
+ const ref=document.getElementById("ref").value||"-";
+ const msg="KONFIRMASI PEMBAYARAN KARYAWAN AI%0A"+
+ "Paket: PRO 7 hari%0A"+
+ "Harga: Rp19.000%0A"+
+ "Email: "+email+"%0A"+
+ "Nama: "+nama+"%0A"+
+ "Referensi: "+ref;
+ window.open("https://wa.me/"+WA+"?text="+msg,"_blank");
+}
+</script>
+</body>
+</html>
