@@ -1,6 +1,6 @@
 
 const SUPABASE_URL = "https://abdjvqrzqvkbnbuoczmh.supabase.co";
-const SUPABASE_KEY = "TEMPEL_PUBLISHABLE_KEY_KAMU";
+const SUPABASE_KEY = "sb_publishable_Q_IFYhLYN5-fjZU0RODf1A_Ad3gTJ-9";
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
@@ -9,45 +9,36 @@ const db = window.supabase.createClient(
 
 window.db = db;
 
-// REGISTER
 window.registerUser = async (name, email, password) => {
   const { data, error } = await db.auth.signUp({
     email,
     password,
-    options: {
-      data: { full_name: name }
-    }
+    options: { data: { full_name: name } }
   });
-
   if (error) throw error;
   return data;
 };
 
-// LOGIN
 window.loginUser = async (email, password) => {
   const { data, error } = await db.auth.signInWithPassword({
     email,
     password
   });
-
   if (error) throw error;
   return data;
 };
 
-// LOGOUT
 window.logoutUser = async () => {
   const { error } = await db.auth.signOut();
   if (error) throw error;
 };
 
-// USER
 window.getCurrentUser = async () => {
   const { data, error } = await db.auth.getUser();
   if (error) throw error;
   return data.user;
 };
 
-// PROFILE
 window.getProfile = async () => {
   const user = await window.getCurrentUser();
   if (!user) return null;
@@ -62,20 +53,15 @@ window.getProfile = async () => {
   return data;
 };
 
-// CEK PRO
 window.checkPro = async () => {
   const { data, error } = await db.rpc("is_pro");
   if (error) throw error;
   return data === true;
 };
 
-// PEMBAYARAN PRO
 window.createProPayment = async () => {
   const user = await window.getCurrentUser();
-
-  if (!user) {
-    throw new Error("Silakan login terlebih dahulu.");
-  }
+  if (!user) throw new Error("Silakan login terlebih dahulu.");
 
   const { data, error } = await db
     .from("payments")
@@ -95,41 +81,25 @@ window.createProPayment = async () => {
     `Halo Admin, saya ingin membeli PRO KARYAWAN AI SUPER SYSTEM Rp19.000/7 hari. ID pembayaran: ${data.id}`
   );
 
-  window.open(
-    `https://wa.me/6285176769024?text=${message}`,
-    "_blank"
-  );
-
+  window.open(`https://wa.me/6285176769024?text=${message}`, "_blank");
   return data;
 };
 
-// AKTIVASI PRO ADMIN
 window.activatePro = async (paymentId) => {
   const { data, error } = await db.rpc(
     "admin_activate_pro",
     { payment_id: paymentId }
   );
-
   if (error) throw error;
   return data;
 };
 
-// AI GEMINI VIA SUPABASE EDGE FUNCTION
 window.askKaryawanAI = async (type, prompt) => {
-  const { data, error } = await db.functions.invoke(
-    "karyawan-ai",
-    {
-      body: {
-        type,
-        prompt
-      }
-    }
-  );
+  const { data, error } = await db.functions.invoke("karyawan-ai", {
+    body: { type, prompt }
+  });
 
   if (error) throw error;
-  if (!data || !data.success) {
-    throw new Error(data?.error || "AI gagal memberikan jawaban.");
-  }
-
+  if (!data?.success) throw new Error(data?.error || "AI gagal.");
   return data.result;
 };
