@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,90 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07111f">
 <title>KARYAWAN AI SUPER SYSTEM</title>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#07111f;--panel:#0e1c2d;--line:#20354d;--text:#eaf2ff;--muted:#91a5bd;--blue:#38bdf8;--purple:#818cf8;--green:#34d399}
-body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0} :root{--bg:#07111f;--panel:#0e1c2d;--line:#20354d;--text:#eaf2ff;--muted:#91a5bd;--blue:#38bdf8;--purple:#818cf8;--green:#34d399}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}button,input,textarea,select{font:inherit}button{cursor:pointer}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:#081523;border-right:1px solid var(--line);padding:22px 15px;display:flex;flex-direction:column;z-index:20;transition:.3s}
-.brand{display:flex;align-items:center;gap:12px;padding:5px 10px 28px}
-.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;font-size:21px}
-.brand strong{font-size:14px}.brand small{display:block;font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px}
-.navlabel{font-size:10px;color:#647b96;letter-spacing:1.5px;padding:15px 12px 8px;font-weight:bold}
-.nav{display:flex;align-items:center;gap:13px;padding:12px;border-radius:10px;color:#9db2ca;text-decoration:none;font-size:13px;margin:3px 0;cursor:pointer}
-.nav i{width:18px;text-align:center}
-.nav:hover,.nav.active{background:#12304b;color:#64d4ff}
-.bottom{margin-top:auto}
-.planbox{padding:15px;border:1px solid #23415b;background:#0d2034;border-radius:14px;margin:15px 0}
-.planbox p{font-size:11px;color:var(--muted);line-height:1.7;margin:9px 0}
-.upgrade{width:100%;padding:11px;border:0;border-radius:9px;background:linear-gradient(100deg,#38bdf8,#6366f1);color:white;font-weight:bold}
-.main{margin-left:250px;width:calc(100% - 250px)}
-.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;background:#081523ed;backdrop-filter:blur(12px);z-index:10}
-.topbar h2{font-size:16px}.topbar small{font-size:11px;color:var(--muted)}
-.user{display:flex;align-items:center;gap:10px}
-.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;font-weight:bold}
-.user strong{font-size:12px;display:block}.user small{font-size:10px;color:var(--muted)}
-.menu{display:none;background:none;border:0;color:white;font-size:20px}
-.content{max-width:1500px;margin:auto;padding:28px}
-.page{display:none;animation:fade .3s}.page.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.welcome{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:25px}
-.welcome h1{font-size:clamp(23px,3vw,31px);letter-spacing:-1px}
-.welcome p{font-size:13px;color:var(--muted);margin-top:8px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:25px}
-.stat{background:linear-gradient(145deg,#102239,#0b1929);border:1px solid var(--line);border-radius:15px;padding:19px;transition:.2s}
-.stat:hover{transform:translateY(-3px)}
-.staticon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px}
-.blue{background:#123b58;color:#38bdf8}.purple{background:#292d58;color:#a5b4fc}.green{background:#124439;color:#34d399}.orange{background:#493321;color:#fbbf24}
-.stat h3{font-size:24px;margin-bottom:7px}.stat p{font-size:11px;color:var(--muted)}
-.sectionhead{display:flex;justify-content:space-between;margin:24px 0 14px}
-.sectionhead h3{font-size:16px}.sectionhead span{font-size:11px;color:var(--muted)}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.tool{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:20px;cursor:pointer;transition:.2s}
-.tool:hover{transform:translateY(-3px);border-color:#3a789e}
-.toolicon{width:45px;height:45px;border-radius:13px;display:grid;place-items:center;font-size:19px;margin-bottom:15px}
-.tool h4{font-size:14px;margin-bottom:8px}.tool p{font-size:11px;color:var(--muted);line-height:1.7}
-.tool button{margin-top:16px;background:#102b43;border:1px solid #224764;color:#65d3ff;border-radius:8px;padding:9px 13px;font-size:11px}
-.workspace{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
-.workspace h3{font-size:16px;margin-bottom:8px}
-.workspace>p{font-size:12px;color:var(--muted);margin-bottom:20px}
-.field{margin-bottom:15px}
-.field label{font-size:12px;display:block;margin-bottom:8px;color:#b7cbe0}
-.field input,.field textarea,.field select{width:100%;background:#071421;border:1px solid #233a51;color:white;padding:13px;border-radius:10px;outline:none}
-.field textarea{min-height:130px;resize:vertical}
-.field input:focus,.field textarea:focus{border-color:var(--blue)}
-.primary{border:0;background:linear-gradient(100deg,#0ea5e9,#6366f1);color:white;padding:13px 18px;border-radius:10px;font-weight:bold;font-size:12px}
-.primary:disabled{opacity:.6}
-.result{margin-top:20px;background:#071421;border:1px solid #20354d;padding:16px;border-radius:12px;white-space:pre-wrap;line-height:1.8;font-size:13px;display:none;overflow-wrap:anywhere}
-.result.show{display:block}
-.activityrow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #1b2d40}
-.activityrow:last-child{border:0}
-.activityrow i{width:35px;height:35px;border-radius:10px;background:#132c43;color:#38bdf8;display:grid;place-items:center}
-.activityrow strong{font-size:12px}.activityrow small{display:block;font-size:10px;color:var(--muted);margin-top:5px}
-.badge{margin-left:auto;font-size:10px;color:#34d399;background:#12382f;padding:6px 9px;border-radius:7px}
-footer{text-align:center;color:#526981;font-size:10px;padding:30px 0}
-.overlay{display:none}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#102b43;border:1px solid #2a506c;padding:13px 18px;border-radius:12px;font-size:12px;z-index:100;display:none;max-width:90%;text-align:center}
-.toast.show{display:block}
-@media(max-width:1050px){.stats{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){.sidebar{transform:translateX(-100%);width:270px}.sidebar.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;inset:0;background:#0008;z-index:15}.main{margin:0;width:100%}.topbar{height:65px;padding:0 16px}.menu{display:block}.content{padding:20px 14px}.welcome{align-items:flex-start;flex-direction:column}.tools{grid-template-columns:1fr}.tool{padding:17px}.workspace{padding:17px}.usertext{display:none}}
+.brand{display:flex;align-items:center;gap:12px;padding:5px 10px 28px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;font-size:21px}.brand strong{font-size:14px}.brand small{display:block;font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px}
+.navlabel{font-size:10px;color:#647b96;letter-spacing:1.5px;padding:15px 12px 8px;font-weight:bold}.nav{display:flex;align-items:center;gap:13px;padding:12px;border-radius:10px;color:#9db2ca;text-decoration:none;font-size:13px;margin:3px 0;cursor:pointer}.nav i{width:18px;text-align:center}.nav:hover,.nav.active{background:#12304b;color:#64d4ff}
+.bottom{margin-top:auto}.planbox{padding:15px;border:1px solid #23415b;background:#0d2034;border-radius:14px;margin:15px 0}.planbox p{font-size:11px;color:var(--muted);line-height:1.7;margin:9px 0}.upgrade{width:100%;padding:11px;border:0;border-radius:9px;background:linear-gradient(100deg,#38bdf8,#6366f1);color:white;font-weight:bold}
+.main{margin-left:250px;width:calc(100% - 250px)}.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;background:#081523ed;backdrop-filter:blur(12px);z-index:10}.topbar h2{font-size:16px}.topbar small{font-size:11px;color:var(--muted)}.user{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;font-weight:bold}.user strong{font-size:12px;display:block}.user small{font-size:10px;color:var(--muted)}.menu{display:none;background:none;border:0;color:white;font-size:20px}
+.content{max-width:1500px;margin:auto;padding:28px}.page{display:none;animation:fade .3s}.page.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.welcome{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:25px}.welcome h1{font-size:clamp(23px,3vw,31px);letter-spacing:-1px}.welcome p{font-size:13px;color:var(--muted);margin-top:8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:25px}.stat{background:linear-gradient(145deg,#102239,#0b1929);border:1px solid var(--line);border-radius:15px;padding:19px;transition:.2s}.stat:hover{transform:translateY(-3px)}.staticon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px}.blue{background:#123b58;color:#38bdf8}.purple{background:#292d58;color:#a5b4fc}.green{background:#124439;color:#34d399}.orange{background:#493321;color:#fbbf24}.stat h3{font-size:24px;margin-bottom:7px}.stat p{font-size:11px;color:var(--muted)}
+.sectionhead{display:flex;justify-content:space-between;margin:24px 0 14px}.sectionhead h3{font-size:16px}.sectionhead span{font-size:11px;color:var(--muted)}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tool{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:20px;cursor:pointer;transition:.2s}.tool:hover{transform:translateY(-3px);border-color:#3a789e}.toolicon{width:45px;height:45px;border-radius:13px;display:grid;place-items:center;font-size:19px;margin-bottom:15px}.tool h4{font-size:14px;margin-bottom:8px}.tool p{font-size:11px;color:var(--muted);line-height:1.7}.tool button{margin-top:16px;background:#102b43;border:1px solid #224764;color:#65d3ff;border-radius:8px;padding:9px 13px;font-size:11px}
+.workspace,.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}.workspace h3{font-size:16px;margin-bottom:8px}.workspace>p{font-size:12px;color:var(--muted);margin-bottom:20px}.field{margin-bottom:15px}.field label{font-size:12px;display:block;margin-bottom:8px;color:#b7cbe0}.field input,.field textarea,.field select{width:100%;background:#071421;border:1px solid #233a51;color:white;padding:13px;border-radius:10px;outline:none}.field textarea{min-height:130px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--blue)}.primary{border:0;background:linear-gradient(100deg,#0ea5e9,#6366f1);color:white;padding:13px 18px;border-radius:10px;font-weight:bold;font-size:12px}.primary:disabled{opacity:.6}
+.result{margin-top:20px;background:#071421;border:1px solid #20354d;padding:16px;border-radius:12px;white-space:pre-wrap;line-height:1.8;font-size:13px;display:none;overflow-wrap:anywhere}.result.show{display:block}.activityrow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #1b2d40}.activityrow:last-child{border:0}.activityrow i{width:35px;height:35px;border-radius:10px;background:#132c43;color:#38bdf8;display:grid;place-items:center}.activityrow strong{font-size:12px}.activityrow small{display:block;font-size:10px;color:var(--muted);margin-top:5px}.badge{margin-left:auto;font-size:10px;color:#34d399;background:#12382f;padding:6px 9px;border-radius:7px}footer{text-align:center;color:#526981;font-size:10px;padding:30px 0}.overlay{display:none}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#102b43;border:1px solid #2a506c;padding:13px 18px;border-radius:12px;font-size:12px;z-index:100;display:none;max-width:90%;text-align:center}.toast.show{display:block}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.sidebar{transform:translateX(-100%);width:270px}.sidebar.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;inset:0;background:#0008;z-index:15}.main{margin:0;width:100%}.topbar{height:65px;padding:0 16px}.menu{display:block}.content{padding:20px 14px}.welcome{align-items:flex-start;flex-direction:column}.tools{grid-template-columns:1fr}.tool{padding:17px}.workspace{padding:17px}.usertext{display:none}}
 </style>
 </head>
 <body>
-
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
 <aside class="sidebar" id="sidebar">
-<div class="brand">
-<div class="logo"><i class="fa-solid fa-bolt"></i></div>
-<div><strong>KARYAWAN AI</strong><small>SUPER SYSTEM</small></div>
-</div>
-
+<div class="brand"><div class="logo"><i class="fa-solid fa-bolt"></i></div><div><strong>KARYAWAN AI</strong><small>SUPER SYSTEM</small></div></div>
 <div class="navlabel">WORKSPACE</div>
 <a class="nav active" onclick="go('overview',this)"><i class="fa-solid fa-grid-2"></i> Overview</a>
 <a class="nav" onclick="go('ai',this)"><i class="fa-solid fa-brain"></i> AI Manager</a>
@@ -97,306 +35,63 @@ footer{text-align:center;color:#526981;font-size:10px;padding:30px 0}
 <a class="nav" onclick="go('sales',this)"><i class="fa-solid fa-chart-line"></i> Sales Assistant</a>
 <a class="nav" onclick="go('analytics',this)"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
 <a class="nav" onclick="go('automation',this)"><i class="fa-solid fa-wand-magic-sparkles"></i> Automation</a>
-
-<div class="navlabel">PERSONAL</div>
-<a class="nav" onclick="go('history',this)"><i class="fa-solid fa-clock"></i> Riwayat</a>
-<a class="nav" onclick="go('settings',this)"><i class="fa-solid fa-gear"></i> Pengaturan</a>
-
-<div class="bottom">
-<div class="planbox">
-<strong><i class="fa-solid fa-crown" style="color:#fbbf24"></i> Paket <span id="sidePlan">FREE</span></strong>
-<p id="sideDesc">Upgrade untuk akses premium.</p>
-<button class="upgrade" onclick="upgrade()">UPGRADE PRO</button>
-</div>
-<a class="nav" href="https://wa.me/6285176769024" target="_blank"><i class="fa-brands fa-whatsapp"></i> Bantuan WhatsApp</a>
-</div>
+<div class="navlabel">PERSONAL</div><a class="nav" onclick="go('history',this)"><i class="fa-solid fa-clock"></i> Riwayat</a><a class="nav" onclick="go('settings',this)"><i class="fa-solid fa-gear"></i> Pengaturan</a>
+<div class="bottom"><div class="planbox"><strong><i class="fa-solid fa-crown" style="color:#fbbf24"></i> Paket <span id="sidePlan">MEMUAT</span></strong><p id="sideDesc">Memeriksa akun...</p><button class="upgrade" onclick="upgrade()">UPGRADE PRO</button></div><a class="nav" href="https://wa.me/6285176769024" target="_blank"><i class="fa-brands fa-whatsapp"></i> Bantuan WhatsApp</a></div>
 </aside>
-
-<main class="main">
-<header class="topbar">
-<div style="display:flex;align-items:center;gap:13px">
-<button class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
-<div><h2 id="topTitle">Overview</h2><small>AI Productivity Workspace</small></div>
-</div>
-<div class="user">
-<div class="avatar" id="avatar">K</div>
-<div class="usertext"><strong id="userName">Pengguna</strong><small id="userEmail">Memuat akun...</small></div>
-</div>
-</header>
-
+<main class="main"><header class="topbar"><div style="display:flex;align-items:center;gap:13px"><button class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button><div><h2 id="topTitle">Overview</h2><small>AI Productivity Workspace</small></div></div><div class="user"><div class="avatar" id="avatar">K</div><div class="usertext"><strong id="userName">Pengguna</strong><small id="userEmail">Memuat akun...</small></div></div></header>
 <div class="content">
-
-<section class="page active" id="page-overview">
-<div class="welcome"><div><h1>Selamat datang 👋</h1><p>Workspace AI untuk produktivitas Anda.</p></div></div>
-
-<div class="stats">
-<div class="stat"><div class="staticon blue"><i class="fa-solid fa-bolt"></i></div><h3 id="taskCount">0</h3><p>Aktivitas AI</p></div>
-<div class="stat"><div class="staticon purple"><i class="fa-solid fa-crown"></i></div><h3 id="planStat">FREE</h3><p>Status akun</p></div>
-<div class="stat"><div class="staticon green"><i class="fa-solid fa-check"></i></div><h3 id="historyCount">0</h3><p>Riwayat tersimpan</p></div>
-<div class="stat"><div class="staticon orange"><i class="fa-solid fa-calendar"></i></div><h3 id="daysLeft">0</h3><p>Sisa masa PRO</p></div>
-</div>
-
-<div class="sectionhead"><h3>AI Tools</h3><span>Workspace tools</span></div>
-<div class="tools">
-<div class="tool" onclick="go('ai')"><div class="toolicon blue"><i class="fa-solid fa-brain"></i></div><h4>AI Manager</h4><p>Analisis pekerjaan dan solusi.</p><button>Buka tools →</button></div>
-<div class="tool" onclick="go('content')"><div class="toolicon purple"><i class="fa-solid fa-pen-nib"></i></div><h4>Content Studio</h4><p>Buat konten media sosial.</p><button>Buka tools →</button></div>
-<div class="tool" onclick="go('sales')"><div class="toolicon green"><i class="fa-solid fa-chart-line"></i></div><h4>Sales Assistant</h4><p>Strategi pemasaran dan penjualan.</p><button>Buka tools →</button></div>
-<div class="tool" onclick="go('analytics')"><div class="toolicon orange"><i class="fa-solid fa-chart-pie"></i></div><h4>Analytics</h4><p>Ringkasan aktivitas.</p><button>Buka tools →</button></div>
-<div class="tool" onclick="go('automation')"><div class="toolicon blue"><i class="fa-solid fa-wand-magic-sparkles"></i></div><h4>Automation</h4><p>Checklist alur kerja.</p><button>Buka tools →</button></div>
-<div class="tool" onclick="go('history')"><div class="toolicon purple"><i class="fa-solid fa-clock"></i></div><h4>Riwayat</h4><p>Hasil pekerjaan sebelumnya.</p><button>Buka tools →</button></div>
-</div>
-</section>
-
-<section class="page" id="page-ai">
-<div class="welcome"><div><h1>AI Manager</h1><p>Asisten Gemini untuk pekerjaan dan analisis.</p></div></div>
-<div class="workspace"><h3>AI Task Assistant</h3><p>Jelaskan pekerjaan yang ingin dibantu Gemini.</p>
-<div class="field"><label>Nama pekerjaan</label><input id="taskInput" placeholder="Contoh: membuat strategi bisnis online"></div>
-<div class="field"><label>Detail instruksi</label><textarea id="taskDetail" placeholder="Tujuan, kebutuhan, dan detail pekerjaan..."></textarea></div>
-<button class="primary" onclick="askAI('manager','taskInput','taskDetail','taskResult',this)">✨ Tanya Gemini</button>
-<div class="result" id="taskResult"></div>
-</div>
-</section>
-
-<section class="page" id="page-content">
-<div class="welcome"><div><h1>Content Studio</h1><p>Generator konten menggunakan Gemini AI.</p></div></div>
-<div class="workspace"><h3>Content Creator</h3><p>Isi detail konten yang ingin dibuat.</p>
-<div class="field"><label>Topik</label><input id="contentTopic" placeholder="Contoh: tips produktivitas"></div>
-<div class="field"><label>Platform</label><select id="contentPlatform"><option>Instagram</option><option>TikTok</option><option>YouTube</option><option>Facebook</option><option>Blog</option></select></div>
-<div class="field"><label>Gaya konten</label><select id="contentStyle"><option>Edukasi</option><option>Promosi</option><option>Storytelling</option><option>Hiburan</option></select></div>
-<button class="primary" onclick="askAI('content','contentTopic','contentStyle','contentResult',this)">✨ Buat Konten Gemini</button>
-<div class="result" id="contentResult"></div>
-</div>
-</section>
-
-<section class="page" id="page-sales">
-<div class="welcome"><div><h1>Sales Assistant</h1><p>Strategi penjualan dengan Gemini AI.</p></div></div>
-<div class="workspace"><h3>Sales Strategist</h3><p>Masukkan informasi produk dan target pelanggan.</p>
-<div class="field"><label>Produk</label><input id="salesProduct" placeholder="Nama produk atau jasa"></div>
-<div class="field"><label>Target pelanggan</label><input id="salesTarget" placeholder="Contoh: pemilik UMKM"></div>
-<div class="field"><label>Tujuan dan detail</label><textarea id="salesGoal" placeholder="Target penjualan, kendala, dan tujuan..."></textarea></div>
-<button class="primary" onclick="askAI('sales','salesProduct','salesGoal','salesResult',this)">✨ Buat Strategi Gemini</button>
-<div class="result" id="salesResult"></div>
-</div>
-</section>
-
-<section class="page" id="page-analytics">
-<div class="welcome"><div><h1>Analytics</h1><p>Ringkasan aktivitas workspace.</p></div></div>
-<div class="stats">
-<div class="stat"><div class="staticon blue"><i class="fa-solid fa-bolt"></i></div><h3 id="analyticsTasks">0</h3><p>Total aktivitas</p></div>
-<div class="stat"><div class="staticon green"><i class="fa-solid fa-database"></i></div><h3 id="analyticsHistory">0</h3><p>Riwayat lokal</p></div>
-</div>
-</section>
-
-<section class="page" id="page-automation">
-<div class="welcome"><div><h1>Automation</h1><p>Checklist alur kerja pribadi.</p></div></div>
-<div class="workspace"><h3>Workflow Checklist</h3><p>Buat checklist pekerjaan.</p>
-<div class="field"><label>Nama workflow</label><input id="workflowName" placeholder="Contoh: workflow harian"></div>
-<div class="field"><label>Langkah kerja</label><textarea id="workflowSteps" placeholder="Satu langkah per baris"></textarea></div>
-<button class="primary" onclick="createWorkflow()">Buat Checklist</button>
-<div id="workflowResult" class="result show"></div>
-</div>
-</section>
-
-<section class="page" id="page-history">
-<div class="welcome"><div><h1>Riwayat</h1><p>Aktivitas AI di perangkat ini.</p></div><button class="primary" onclick="clearHistory()">Hapus Riwayat</button></div>
-<div class="activity" id="historyList"><p style="color:#91a5bd;font-size:12px">Belum ada aktivitas.</p></div>
-</section>
-
-<section class="page" id="page-settings">
-<div class="welcome"><div><h1>Pengaturan</h1><p>Pengaturan akun Anda.</p></div></div>
-<div class="workspace">
-<h3>Informasi Akun</h3><p id="settingsEmail">Memuat...</p>
-<div class="field"><label>Status paket</label><input id="settingsPlan" readonly></div>
-<button class="primary" onclick="upgrade()">Upgrade PRO</button>
-<button class="primary" style="background:#24384d;margin-left:8px" onclick="logout()">Logout</button>
-</div>
-</section>
-
-<footer>KARYAWAN AI SUPER SYSTEM • Powered by Gemini AI</footer>
-</div>
-</main>
-
-<div class="toast" id="toast"></div>
-
+<section class="page active" id="page-overview"><div class="welcome"><div><h1>Selamat datang 👋</h1><p>Workspace AI untuk strategi, konten, penjualan, dan operasional.</p></div><button class="primary" onclick="go('ai')">Mulai bekerja →</button></div>
+<div class="stats"><div class="stat"><div class="staticon blue"><i class="fa-solid fa-crown"></i></div><h3 id="planStat">...</h3><p>Status paket akun</p></div><div class="stat"><div class="staticon purple"><i class="fa-solid fa-bolt"></i></div><h3 id="taskCount">0</h3><p>Pekerjaan dibuat</p></div><div class="stat"><div class="staticon green"><i class="fa-solid fa-clock"></i></div><h3 id="historyCount">0</h3><p>Riwayat tersimpan</p></div><div class="stat"><div class="staticon orange"><i class="fa-solid fa-calendar"></i></div><h3 id="daysLeft">-</h3><p>Sisa masa PRO</p></div></div>
+<div class="sectionhead"><div><h3>Tim AI kamu</h3><span>Pilih modul untuk mulai.</span></div></div><div class="tools">
+<div class="tool" onclick="go('ai')"><div class="toolicon blue">✦</div><h4>AI Manager</h4><p>Susun strategi dan langkah kerja.</p><button>Buka workspace →</button></div>
+<div class="tool" onclick="go('content')"><div class="toolicon purple">▤</div><h4>Content Studio</h4><p>Ide, hook, caption, dan konten.</p><button>Buka workspace →</button></div>
+<div class="tool" onclick="go('sales')"><div class="toolicon green">◉</div><h4>Sales Assistant</h4><p>Strategi penjualan dan draft respons.</p><button>Buka workspace →</button></div>
+<div class="tool" onclick="go('analytics')"><div class="toolicon orange">⌁</div><h4>AI Analyst</h4><p>Evaluasi data dan eksperimen.</p><button>Buka workspace →</button></div>
+<div class="tool" onclick="go('automation')"><div class="toolicon blue">⟳</div><h4>Automation</h4><p>Checklist alur operasional.</p><button>Buka workspace →</button></div>
+</div></section>
+<section class="page" id="page-ai"><div class="workspace"><h3>✦ AI Manager</h3><p>Delegasikan pekerjaan kepada Gemini AI.</p><div class="field"><label>Nama pekerjaan</label><input id="aiTask" placeholder="Contoh: Strategi pemasaran 7 hari"></div><div class="field"><label>Instruksi detail</label><textarea id="aiDetail" placeholder="Target, produk, audiens, dan tujuan..."></textarea></div><button class="primary" onclick="askAI('manager','aiTask','aiDetail','aiResult',this)">✦ Jalankan AI Manager</button><div class="result" id="aiResult"></div></div></section>
+<section class="page" id="page-content"><div class="workspace"><h3>▤ Content Studio</h3><p>Generate konten dengan Gemini.</p><div class="field"><label>Topik / produk</label><input id="contentTask" placeholder="Topik konten"></div><div class="field"><label>Platform</label><select id="contentPlatform"><option>Instagram</option><option>TikTok</option><option>Facebook</option><option>YouTube Shorts</option></select></div><div class="field"><label>Gaya / instruksi</label><textarea id="contentDetail" placeholder="Gaya, target audiens, tujuan..."></textarea></div><button class="primary" onclick="askAI('content','contentTask','contentDetail','contentResult',this)">✦ Buat konten</button><div class="result" id="contentResult"></div></div></section>
+<section class="page" id="page-sales"><div class="workspace"><h3>◉ Sales Assistant</h3><p>Rancang strategi dan jawaban pelanggan.</p><div class="field"><label>Produk / layanan</label><input id="salesTask" placeholder="Nama produk dan manfaat"></div><div class="field"><label>Target pelanggan</label><input id="salesTarget" placeholder="Target audiens"></div><div class="field"><label>Detail / tujuan</label><textarea id="salesDetail" placeholder="Harga, pertanyaan pelanggan, tujuan..."></textarea></div><button class="primary" onclick="askAI('sales','salesTask','salesDetail','salesResult',this)">✦ Jalankan Sales Assistant</button><div class="result" id="salesResult"></div></div></section>
+<section class="page" id="page-analytics"><div class="workspace"><h3>⌁ AI Analyst</h3><p>Analisis data dengan Gemini.</p><div class="field"><label>Data / metrik</label><textarea id="analyticsTask" placeholder="Masukkan data performa, penjualan, dan metrik..."></textarea></div><div class="field"><label>Pertanyaan analisis</label><input id="analyticsDetail" placeholder="Apa yang ingin diketahui?"></div><button class="primary" onclick="askAI('analytics','analyticsTask','analyticsDetail','analyticsResult',this)">⌁ Analisis data</button><div class="result" id="analyticsResult"></div></div></section>
+<section class="page" id="page-automation"><div class="workspace"><h3>⟳ Automation Center</h3><p>Checklist workflow lokal.</p><div id="checks"></div><div class="field"><label>Nama workflow</label><input id="workflowName" placeholder="Workflow mingguan"></div><div class="field"><label>Langkah workflow (satu per baris)</label><textarea id="workflowSteps" placeholder="Riset ide&#10;Buat draft&#10;Review&#10;Publikasikan"></textarea></div><button class="primary" onclick="createWorkflow()">Buat checklist</button><div id="workflowResult" class="result show"></div></div></section>
+<section class="page" id="page-history"><div class="workspace"><h3>Riwayat pekerjaan</h3><p>Riwayat aktivitas di perangkat ini.</p><button class="primary" onclick="clearHistory()">Hapus riwayat</button><div id="historyList" style="margin-top:18px"></div></div></section>
+<section class="page" id="page-settings"><div class="workspace"><h3>Pengaturan akun</h3><p>Informasi profil dan paket.</p><div class="field"><label>Email akun</label><input id="settingsEmail" readonly></div><div class="field"><label>Status paket</label><input id="settingsPlan" readonly></div><button class="primary" onclick="refreshAccount()">Refresh status akun</button> <button class="primary" onclick="logout()">Logout</button></div></section>
+<footer>KARYAWAN AI SUPER SYSTEM • Workspace produktivitas</footer>
+</div></main><div class="toast" id="toast"></div>
 <script>
-/* ========================================
-   KONFIGURASI SUPABASE
-   GANTI PUBLISHABLE KEY DI BAWAH
-======================================== */
 const SUPABASE_URL="https://abdjvqrzqvkbnbuoczmh.supabase.co";
-const SUPABASE_KEY="MASUKKAN_SUPABASE_PUBLISHABLE_KEY_DI_SINI";
-
+const SUPABASE_KEY="sb_publishable_Q_IFYhLYN5-fjZU0RODf1A_Ad3gTJ-9";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-window.db=db;
-
-let currentUser=null;
-let currentProfile=null;
-let activities=JSON.parse(localStorage.getItem("kai_history")||"[]");
-let taskCount=Number(localStorage.getItem("kai_tasks")||0);
-
-function toast(msg){
- const el=document.getElementById("toast");
- el.textContent=msg;
- el.classList.add("show");
- setTimeout(()=>el.classList.remove("show"),3500);
-}
-
-function upgrade(){location.href="upgrade.html"}
-
-function toggleMenu(){
- document.getElementById("sidebar").classList.toggle("open");
- document.getElementById("overlay").classList.toggle("show");
-}
-
-function go(page,element){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- const target=document.getElementById("page-"+page);
- if(target)target.classList.add("active");
- document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
- if(element)element.classList.add("active");
- const titles={overview:"Overview",ai:"AI Manager",content:"Content Studio",sales:"Sales Assistant",analytics:"Analytics",automation:"Automation",history:"Riwayat",settings:"Pengaturan"};
- document.getElementById("topTitle").textContent=titles[page]||page;
- document.getElementById("sidebar").classList.remove("open");
- document.getElementById("overlay").classList.remove("show");
-}
-
-function saveActivity(type,detail){
- activities.unshift({type,detail,time:new Date().toLocaleString("id-ID")});
- activities=activities.slice(0,100);
- localStorage.setItem("kai_history",JSON.stringify(activities));
- taskCount++;
- localStorage.setItem("kai_tasks",taskCount);
- renderHistory();
- updateStats();
-}
-
-function renderHistory(){
- const list=document.getElementById("historyList");
- if(!activities.length){
- list.innerHTML='<p style="color:#91a5bd;font-size:12px">Belum ada aktivitas.</p>';
- }else{
- list.innerHTML=activities.map(a=>`
- <div class="activityrow">
- <i class="fa-solid fa-bolt"></i>
- <div><strong>${escapeHTML(a.type)}</strong><small>${escapeHTML(a.detail)} • ${escapeHTML(a.time)}</small></div>
- <span class="badge">Selesai</span>
- </div>`).join("");
- }
-}
-
-function escapeHTML(v){
- return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-
-function updateStats(){
- document.getElementById("taskCount").textContent=taskCount;
- document.getElementById("historyCount").textContent=activities.length;
- document.getElementById("analyticsTasks").textContent=taskCount;
- document.getElementById("analyticsHistory").textContent=activities.length;
-}
-
+let currentUser=null,currentProfile={},activities=JSON.parse(localStorage.getItem("kai_history")||"[]"),taskCount=Number(localStorage.getItem("kai_tasks")||0);
+function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),3500)}
+function upgrade(){location.href="upgrade.html"}function toggleMenu(){document.getElementById("sidebar").classList.toggle("open");document.getElementById("overlay").classList.toggle("show")}
+function go(page,element){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));const t=document.getElementById("page-"+page);if(t)t.classList.add("active");document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));if(element)element.classList.add("active");const titles={overview:"Overview",ai:"AI Manager",content:"Content Studio",sales:"Sales Assistant",analytics:"Analytics",automation:"Automation",history:"Riwayat",settings:"Pengaturan"};document.getElementById("topTitle").textContent=titles[page]||page;toggleMenuClose()}
+function toggleMenuClose(){document.getElementById("sidebar").classList.remove("open");document.getElementById("overlay").classList.remove("show")}
+function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 async function initAccount(){
- const {data,error}=await db.auth.getSession();
- if(error||!data.session){
- location.replace("login.html");
- return;
- }
- currentUser=data.session.user;
- document.getElementById("userEmail").textContent=currentUser.email||"Pengguna";
- document.getElementById("settingsEmail").textContent=currentUser.email||"";
- document.getElementById("userName").textContent=currentUser.user_metadata?.full_name||"Pengguna";
- document.getElementById("avatar").textContent=(currentUser.email||"K").charAt(0).toUpperCase();
-
- const {data:profile}=await db.from("profiles").select("*").eq("id",currentUser.id).maybeSingle();
- currentProfile=profile||{};
- const plan=String(currentProfile.plan||"free").toUpperCase();
- document.getElementById("planStat").textContent=plan;
- document.getElementById("sidePlan").textContent=plan;
- document.getElementById("settingsPlan").value=plan;
-
- let days=0;
- if(currentProfile.pro_expires_at){
- days=Math.max(0,Math.ceil((new Date(currentProfile.pro_expires_at)-Date.now())/86400000));
- }
- document.getElementById("daysLeft").textContent=days;
- document.getElementById("sideDesc").textContent=plan==="PRO"?"Akun PRO aktif.":"Upgrade untuk akses premium.";
+ const {data,error}=await db.auth.getSession();if(error||!data.session){location.replace("login.html");return}
+ currentUser=data.session.user;document.getElementById("userEmail").textContent=currentUser.email||"Pengguna";document.getElementById("settingsEmail").value=currentUser.email||"";document.getElementById("avatar").textContent=(currentUser.email||"K")[0].toUpperCase();
+ const {data:profile,error:pe}=await db.from("profiles").select("role,plan,pro_until").eq("id",currentUser.id).maybeSingle();if(pe){console.error(pe);toast("Profil gagal dimuat");return}
+ currentProfile=profile||{};const role=String(currentProfile.role||"user").toLowerCase(),plan=String(currentProfile.plan||"free").toUpperCase(),admin=role==="admin",pro=admin||plan==="PRO";
+ document.getElementById("userName").textContent=(currentUser.user_metadata?.full_name||currentUser.email||"Pengguna")+(admin?" • ADMIN":"");
+ document.getElementById("planStat").textContent=pro?"PRO":"FREE";document.getElementById("sidePlan").textContent=pro?"PRO":"FREE";document.getElementById("settingsPlan").value=pro?(admin?"ADMIN • PRO PERMANEN":"PRO"):"FREE";
+ document.getElementById("daysLeft").textContent=admin?"PERMANEN":pro&&currentProfile.pro_until?Math.max(0,Math.ceil((new Date(currentProfile.pro_until)-Date.now())/86400000)):pro?"AKTIF":"0";
+ document.getElementById("sideDesc").textContent=admin?"ADMIN • PRO PERMANEN":pro?"Akun PRO aktif":"Upgrade untuk akses premium.";
 }
-
+async function refreshAccount(){await initAccount();toast("Status akun diperbarui")}
 async function askAI(type,inputId,detailId,resultId,button){
- if(!currentUser){location.href="login.html";return}
- const input=document.getElementById(inputId).value.trim();
- const detail=document.getElementById(detailId).value.trim();
- if(!input||!detail){toast("Lengkapi semua instruksi terlebih dahulu.");return}
-
- const result=document.getElementById(resultId);
- const oldText=button.innerHTML;
- button.disabled=true;
- button.innerHTML="⏳ Gemini sedang bekerja...";
- result.classList.add("show");
- result.textContent="Sedang menghubungkan ke Gemini AI...";
-
- let prompt="";
- if(type==="manager"){
- prompt="Bertindak sebagai AI Manager profesional. Analisis pekerjaan berikut dan berikan solusi sistematis, langkah kerja, prioritas, dan hasil yang diharapkan.\nPekerjaan: "+input+"\nDetail: "+detail;
- }
- if(type==="content"){
- prompt="Buat konten "+document.getElementById("contentPlatform").value+" dengan gaya "+detail+". Topik: "+input+". Berikan judul, hook, isi, CTA, dan hashtag yang relevan.";
- }
- if(type==="sales"){
- prompt="Bertindak sebagai Sales Strategist. Produk: "+input+". Target pelanggan: "+document.getElementById("salesTarget").value+". Detail dan tujuan: "+detail+". Buat strategi pemasaran, penawaran, script penjualan, dan langkah tindak lanjut.";
- }
-
- try{
- const {data,error}=await db.functions.invoke("karyawan-ai",{body:{type,prompt}});
- if(error)throw error;
- if(!data||!data.success)throw new Error(data?.error||"Gemini tidak memberikan jawaban.");
- result.textContent=data.result||"Tidak ada hasil.";
- saveActivity(type.toUpperCase(),input);
- toast("Berhasil dibuat oleh Gemini AI.");
- }catch(e){
- result.textContent="GAGAL MEMANGGIL GEMINI\n\n"+(e.message||"Periksa koneksi, login, dan Edge Function Supabase.");
- toast("Gemini gagal. Periksa konfigurasi backend.");
- }finally{
- button.disabled=false;
- button.innerHTML=oldText;
- }
+ const a=document.getElementById(inputId).value.trim(),b=document.getElementById(detailId).value.trim();if(!a||!b){toast("Lengkapi semua instruksi.");return}
+ const result=document.getElementById(resultId);button.disabled=true;button.dataset.old=button.innerHTML;button.innerHTML="⏳ Gemini bekerja...";result.classList.add("show");result.textContent="Menghubungkan ke Gemini AI...";
+ const prompt=`Kamu adalah ${type==="manager"?"AI Manager profesional":type==="content"?"Content Creator profesional":type==="sales"?"Sales strategist":"AI Analyst"}. Tugas: ${a}. Detail: ${b}. Berikan jawaban Bahasa Indonesia yang konkret, sistematis, dan dapat dipraktikkan.`;
+ try{const {data,error}=await db.functions.invoke("karyawan-ai",{body:{type,prompt}});if(error)throw error;if(!data?.success)throw new Error(data?.error||"AI gagal");result.textContent=data.result||"Tidak ada hasil";saveActivity(type.toUpperCase(),a);toast("Berhasil dibuat oleh Gemini")}catch(e){result.textContent="GAGAL MEMANGGIL GEMINI\n"+(e.message||"Periksa backend");toast("Gemini gagal")}finally{button.disabled=false;button.innerHTML=button.dataset.old}
 }
-
-function createWorkflow(){
- const name=document.getElementById("workflowName").value.trim();
- const steps=document.getElementById("workflowSteps").value.trim();
- if(!name||!steps){toast("Isi nama dan langkah workflow.");return}
- const lines=steps.split("\n").filter(x=>x.trim());
- document.getElementById("workflowResult").innerHTML=lines.map((x,i)=>`
- <div style="padding:10px 0;border-bottom:1px solid #20354d">
- <label><input type="checkbox"> ${i+1}. ${escapeHTML(x)}</label></div>`).join("");
- saveActivity("WORKFLOW",name);
- toast("Checklist berhasil dibuat.");
-}
-
-function clearHistory(){
- if(!confirm("Hapus semua riwayat lokal?"))return;
- activities=[];
- taskCount=0;
- localStorage.removeItem("kai_history");
- localStorage.removeItem("kai_tasks");
- renderHistory();
- updateStats();
- toast("Riwayat dihapus.");
-}
-
-async function logout(){
- await db.auth.signOut();
- location.replace("login.html");
-}
-
-db.auth.onAuthStateChange((event,session)=>{
- if(event==="SIGNED_OUT")location.replace("login.html");
-});
-
-renderHistory();
-updateStats();
-initAccount();
+function saveActivity(type,detail){activities.unshift({type,detail,time:new Date().toLocaleString("id-ID")});activities=activities.slice(0,100);localStorage.setItem("kai_history",JSON.stringify(activities));taskCount++;localStorage.setItem("kai_tasks",taskCount);renderHistory();updateStats()}
+function renderHistory(){const el=document.getElementById("historyList");el.innerHTML=activities.length?activities.map(a=>`<div class="activityrow"><i class="fa-solid fa-bolt"></i><div><strong>${escapeHTML(a.type)}</strong><small>${escapeHTML(a.detail)} • ${escapeHTML(a.time)}</small></div><span class="badge">Selesai</span></div>`).join(""):"<p>Belum ada aktivitas.</p>"}
+function updateStats(){document.getElementById("taskCount").textContent=taskCount;document.getElementById("historyCount").textContent=activities.length}
+function createWorkflow(){const n=document.getElementById("workflowName").value.trim(),s=document.getElementById("workflowSteps").value.trim();if(!n||!s){toast("Isi nama dan langkah workflow");return}document.getElementById("workflowResult").textContent=s.split("\n").filter(x=>x.trim()).map((x,i)=>`${i+1}. ☐ ${x}`).join("\n");document.getElementById("workflowResult").classList.add("show");saveActivity("WORKFLOW",n);toast("Checklist dibuat")}
+function clearHistory(){if(!confirm("Hapus seluruh riwayat?"))return;activities=[];taskCount=0;localStorage.removeItem("kai_history");localStorage.removeItem("kai_tasks");renderHistory();updateStats();toast("Riwayat dihapus")}
+async function logout(){await db.auth.signOut();location.replace("login.html")}
+db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_OUT")location.replace("login.html")});
+renderHistory();updateStats();initAccount();
 </script>
-</body>
-</html>
+</body></html>
