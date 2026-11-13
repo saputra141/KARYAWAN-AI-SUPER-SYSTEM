@@ -4,60 +4,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Daftar | Karyawan AI</title>
+<meta name="theme-color" content="#07111f">
+<title>Daftar | KARYAWAN AI SUPER SYSTEM</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:#07111f;color:#eef5ff;font-family:system-ui}
-.card{width:min(92%,430px);padding:30px;border:1px solid #24364d;border-radius:22px;background:#101d30;box-shadow:0 20px 60px #0005}
-.logo{font-size:35px;font-weight:900;color:#58a6ff;text-align:center}
-h1{text-align:center;margin:8px 0}
-p{text-align:center;color:#9eb2ca}
-input,button{width:100%;padding:15px;margin-top:13px;border-radius:12px;font-size:16px}
-input{background:#081426;color:white;border:1px solid #2b405b}
-button{border:0;background:linear-gradient(135deg,#1677ff,#00b7d4);color:white;font-weight:700;cursor:pointer}
-button:disabled{opacity:.6}
+body{
+ margin:0;min-height:100vh;padding:25px 12px;
+ display:flex;align-items:center;justify-content:center;
+ background:#07111f;color:#edf5ff;
+ font-family:system-ui,-apple-system,Arial,sans-serif
+}
+.card{
+ width:100%;max-width:480px;padding:30px;
+ background:#101d30;border:1px solid #263b56;
+ border-radius:24px;box-shadow:0 20px 60px #0005
+}
+.logo{text-align:center;font-size:40px;font-weight:900;color:#58a6ff}
+h1{text-align:center;margin:8px 0;font-size:30px}
+.subtitle{text-align:center;color:#9eb2ca;margin-bottom:28px}
+label{display:block;margin:15px 0 7px;font-size:14px;color:#c6d6e8}
+input{
+ width:100%;padding:15px;border-radius:13px;
+ border:1px solid #2b405b;background:#081426;
+ color:white;font-size:16px;outline:none
+}
+input:focus{border-color:#3687ff;box-shadow:0 0 0 3px #3687ff20}
+button{
+ width:100%;padding:15px;margin-top:20px;
+ border:0;border-radius:13px;
+ background:linear-gradient(135deg,#1677ff,#00b7d4);
+ color:white;font-size:16px;font-weight:800;cursor:pointer
+}
+button:disabled{opacity:.6;cursor:wait}
+.message{
+ display:none;margin-top:16px;padding:13px;
+ border-radius:12px;font-size:14px;line-height:1.6;
+ overflow-wrap:anywhere
+}
+.message.error{display:block;background:#3b1824;color:#ffb4bf}
+.message.success{display:block;background:#10352c;color:#91f2c9}
+.links{text-align:center;margin-top:22px;line-height:2}
 a{color:#61b5ff;text-decoration:none}
-.footer{text-align:center;margin-top:20px}
-#msg{font-size:14px;margin-top:15px;word-break:break-word}
+.back{display:block;margin-top:10px}
 </style>
 </head>
+
 <body>
 <div class="card">
-<div class="logo">KAI</div>
-<h1>Buat Akun Baru</h1>
-<p>Daftar KARYAWAN AI SUPER SYSTEM</p>
-<form id="registerForm">
-<input id="name" type="text" placeholder="Nama lengkap" required autocomplete="name">
-<input id="email" type="email" placeholder="Email" required autocomplete="email">
-<input id="password" type="password" placeholder="Password (minimal 6 karakter)" required minlength="6" autocomplete="new-password">
-<input id="confirm" type="password" placeholder="Ulangi password" required minlength="6" autocomplete="new-password">
-<button id="btn" type="submit">DAFTAR</button>
-</form>
-<div id="msg"></div>
-<div class="footer">Sudah punya akun? <a href="login.html">Login</a></div>
-<div class="footer"><a href="index.html">← Kembali ke beranda</a></div>
+ <div class="logo">KAI</div>
+ <h1>Buat Akun Baru</h1>
+ <div class="subtitle">Daftar KARYAWAN AI SUPER SYSTEM</div>
+
+ <form id="registerForm">
+  <label for="fullName">Nama lengkap</label>
+  <input id="fullName" type="text" placeholder="Nama lengkap"
+   autocomplete="name" required>
+
+  <label for="emailInput">Email</label>
+  <input id="emailInput" type="email" placeholder="Email aktif"
+   autocomplete="email" required>
+
+  <label for="passwordInput">Password</label>
+  <input id="passwordInput" type="password"
+   placeholder="Minimal 6 karakter"
+   minlength="6" autocomplete="new-password" required>
+
+  <label for="passwordConfirm">Konfirmasi password</label>
+  <input id="passwordConfirm" type="password"
+   placeholder="Ulangi password"
+   minlength="6" autocomplete="new-password" required>
+
+  <button id="registerButton" type="submit">DAFTAR</button>
+ </form>
+
+ <div id="message" class="message"></div>
+
+ <div class="links">
+  Sudah punya akun? <a href="login.html">Login</a>
+  <a class="back" href="index.html">← Kembali ke beranda</a>
+ </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="backend.js"></script>
+
 <script>
-const form=document.getElementById("registerForm");
-const msg=document.getElementById("msg");
-const btn=document.getElementById("btn");
-form.addEventListener("submit",async e=>{
- e.preventDefault();btn.disabled=true;btn.textContent="Membuat akun...";
- msg.textContent="";
- if(password.value!==confirm.value){
-  msg.style.color="#ff8585";msg.textContent="Password dan konfirmasi tidak sama.";
-  btn.disabled=false;btn.textContent="DAFTAR";return;
- }
- try{
-  await window.registerUser(name.value.trim(),email.value.trim(),password.value);
-  msg.style.color="#66e6a5";
-  msg.textContent="Pendaftaran berhasil. Jika diminta, cek email untuk verifikasi. Silakan login.";
-  form.reset();
- }catch(err){
-  msg.style.color="#ff8585";msg.textContent=err.message||"Pendaftaran gagal.";
- }finally{btn.disabled=false;btn.textContent="DAFTAR";}
+"use strict";
+
+const registerForm = document.getElementById("registerForm");
+const fullNameInput = document.getElementById("fullName");
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
+const passwordConfirmInput = document.getElementById("passwordConfirm");
+const registerButton = document.getElementById("registerButton");
+const messageBox = document.getElementById("message");
+
+function showMessage(text, type) {
+  messageBox.textContent = text;
+  messageBox.className = "message " + type;
+}
+
+registerForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const fullName = fullNameInput.value.trim();
+  const email = emailInput.value.trim().toLowerCase();
+  const passwordValue = passwordInput.value;
+  const confirmValue = passwordConfirmInput.value;
+
+  if (!fullName || !email || !passwordValue || !confirmValue) {
+    showMessage("Semua kolom wajib diisi.", "error");
+    return;
+  }
+
+  if (passwordValue.length < 6) {
+    showMessage("Password minimal 6 karakter.", "error");
+    return;
+  }
+
+  if (passwordValue !== confirmValue) {
+    showMessage("Password dan konfirmasi tidak sama. Periksa kedua kolom.", "error");
+    passwordConfirmInput.focus();
+    return;
+  }
+
+  if (typeof window.registerUser !== "function") {
+    showMessage("Backend belum dimuat. Periksa backend.js dan koneksi internet.", "error");
+    return;
+  }
+
+  registerButton.disabled = true;
+  registerButton.textContent = "MEMBUAT AKUN...";
+  messageBox.className = "message";
+  messageBox.textContent = "";
+
+  try {
+    const result = await window.registerUser(
+      fullName,
+      email,
+      passwordValue
+    );
+
+    if (result && result.session) {
+      showMessage("Pendaftaran berhasil! Akun kamu sudah login. Membuka dashboard...", "success");
+      setTimeout(function() {
+        window.location.href = "index.html";
+      }, 1200);
+    } else {
+      showMessage(
+        "Pendaftaran berhasil! Silakan cek email untuk verifikasi, lalu login.",
+        "success"
+      );
+      registerForm.reset();
+    }
+
+  } catch (error) {
+    console.error("Register error:", error);
+
+    let errorText = error && error.message
+      ? error.message
+      : "Pendaftaran gagal. Silakan coba lagi.";
+
+    if (errorText.toLowerCase().includes("already registered")) {
+      errorText = "Email ini sudah terdaftar. Silakan login.";
+    }
+
+    showMessage(errorText, "error");
+
+  } finally {
+    registerButton.disabled = false;
+    registerButton.textContent = "DAFTAR";
+  }
 });
 </script>
 </body>
